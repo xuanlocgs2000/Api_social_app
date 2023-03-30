@@ -113,3 +113,9 @@ export const getTimelinePosts = async (req, res) => {
     res.status(500).json(error);
   }
 };
+//post time line theo thoiwf gian
+// res.status(200).json({});
+// res.status(500).json(err){
+
+
+// }
