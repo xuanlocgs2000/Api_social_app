@@ -1,4 +1,4 @@
-# NodeJS - Food Delivery App (Backend)
+# NodeJS - Food Review App (Backend)
 
 Backend system for [**Food review app **](https://github.com/xuanlocgs2000/foodReviewApp "React Native - Food reivew App") mobile app.
 
