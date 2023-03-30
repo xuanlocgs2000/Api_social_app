@@ -66,28 +66,7 @@ export const updateUser = async (req, res) => {
     res.status(403).json("Access Denied! you can only update your own profile");
   }
 };
-//update user
-export const updateUser2 = async (req, res) => {
-  const id = req.params.id;
-  const { currentUserId, currentUserAdminStatus, password } = req.body;
-  console.log(req.body);
-  if (id == currentUserId || currentUserAdminStatus) {
-    try {
-      if (password) {
-        const salt = await bcrypt.genSalt(10);
-        req.body.password = await bcrypt.hash(password, salt);
-      }
-      const user = await UserModel.findByIdAndUpdate(id, req.body, {
-        new: true,
-      });
-      res.status(200).json(user);
-    } catch (error) {
-      res.status(500).json(error);
-    }
-  } else {
-    res.status(403).json("Access Denied! you can only update your own profile");
-  }
-};
+
 //Delete user
 
 export const deleteUser = async (req, res) => {
@@ -140,9 +119,7 @@ export const followUser = async (req, res) => {
     }
   }
 };
-export const updateUserAll = async (req, res) => {
-  
-};
+export const updateUserAll = async (req, res) => {};
 //folower user
 export const FollowUserTest = async (req, res) => {
   const id = req.params.id;
@@ -188,5 +165,32 @@ export const UnFollowUser = async (req, res) => {
     } catch (error) {
       res.status(500).json(error);
     }
+  }
+};
+//ban user
+export const banUser = async (req, res) => {
+  const id = req.params.id;
+  const { currentUserAdminStatus } = req.body;
+
+  if (currentUserAdminStatus) {
+    try {
+      const user = await UserModel.findByIdAndUpdate(
+        id,
+        { banned: true },
+        { new: true }
+      );
+
+      if (user) {
+        res.status(200).json("User banned successfully");
+      } else {
+        res.status(404).json("No such user exists");
+      }
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  } else {
+    res
+      .status(403)
+      .json("Access Denied! you do not have permission to ban users");
   }
 };
